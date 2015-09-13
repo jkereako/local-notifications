@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9046" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9035"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="LocalNotifications" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Allowed notification types" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hrj-5P-PWB">
+                                <rect key="frame" x="20" y="50" width="560" height="25.5"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="21"/>
+                                <color key="textColor" red="0.60000002384185791" green="0.60000002384185791" blue="0.60000002384185791" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="None" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8hg-6V-EaV">
+                                <rect key="frame" x="20" y="83" width="560" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Post notifications" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UbP-xP-1nY">
+                                <rect key="frame" x="20" y="163.5" width="560" height="25.5"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="21"/>
+                                <color key="textColor" red="0.60000002384185791" green="0.60000002384185791" blue="0.60000002384185791" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xgN-17-Qw0">
+                                <rect key="frame" x="20" y="197" width="144" height="30"/>
+                                <state key="normal" title="Post notification now"/>
+                                <connections>
+                                    <action selector="postNotificationNowAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="R1K-lQ-a5L"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iEA-KM-QYz">
+                                <rect key="frame" x="20" y="301.5" width="202" height="30"/>
+                                <state key="normal" title="Post notification in 5 seconds"/>
+                                <connections>
+                                    <action selector="postNotificationLaterAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dXL-6G-ief"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hit ⇧⌘H immediately and wait to view the notification" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jOT-79-MUz">
+                                <rect key="frame" x="20" y="331.5" width="560" height="14.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Immediately prints a debug message in the console" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i1d-qB-Dc6">
+                                <rect key="frame" x="20" y="227" width="560" height="14.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="UbP-xP-1nY" firstAttribute="top" secondItem="8hg-6V-EaV" secondAttribute="bottom" constant="60" id="0Tu-sX-Bep"/>
+                            <constraint firstItem="jOT-79-MUz" firstAttribute="top" secondItem="iEA-KM-QYz" secondAttribute="bottom" id="4gX-Ox-PaZ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="8hg-6V-EaV" secondAttribute="trailing" id="8j2-8X-iCg"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Hrj-5P-PWB" secondAttribute="trailing" id="AS5-gy-WZk"/>
+                            <constraint firstItem="UbP-xP-1nY" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="E6l-z3-uou"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="jOT-79-MUz" secondAttribute="trailing" id="GoT-Ib-cUd"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="i1d-qB-Dc6" secondAttribute="trailing" id="OAc-Ku-Rog"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="8hg-6V-EaV" secondAttribute="leading" id="PAH-Fa-2Dc"/>
+                            <constraint firstItem="i1d-qB-Dc6" firstAttribute="top" secondItem="xgN-17-Qw0" secondAttribute="bottom" id="S8D-CW-MYx"/>
+                            <constraint firstItem="iEA-KM-QYz" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="VjL-UG-8cQ"/>
+                            <constraint firstItem="Hrj-5P-PWB" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="30" id="bXv-zV-Gge"/>
+                            <constraint firstItem="xgN-17-Qw0" firstAttribute="top" secondItem="UbP-xP-1nY" secondAttribute="bottom" constant="8" id="bgv-hL-a8c"/>
+                            <constraint firstItem="Hrj-5P-PWB" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="cBa-bg-3hl"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="i1d-qB-Dc6" secondAttribute="leading" id="hw7-IM-NCT"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="UbP-xP-1nY" secondAttribute="trailing" id="kIM-SA-0bP"/>
+                            <constraint firstItem="8hg-6V-EaV" firstAttribute="top" secondItem="Hrj-5P-PWB" secondAttribute="bottom" constant="8" id="lHP-4a-Ye0"/>
+                            <constraint firstItem="xgN-17-Qw0" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="qWJ-Kx-7Yw"/>
+                            <constraint firstItem="iEA-KM-QYz" firstAttribute="top" secondItem="xgN-17-Qw0" secondAttribute="bottom" constant="8" id="tKq-yL-ihX"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="jOT-79-MUz" secondAttribute="leading" id="tZO-UZ-pd3"/>
+                            <constraint firstItem="iEA-KM-QYz" firstAttribute="top" secondItem="i1d-qB-Dc6" secondAttribute="bottom" constant="60" id="tqJ-QL-7Z2"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="tKq-yL-ihX"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="allowedTypes" destination="8hg-6V-EaV" id="hfO-a6-mEA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+    </scenes>
+</document>
