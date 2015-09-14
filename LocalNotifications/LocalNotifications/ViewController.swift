@@ -12,37 +12,68 @@ class ViewController: UIViewController {
   private var count = 0
   private var localNotificationsAllowed = true
   @IBOutlet weak var allowedTypes: UILabel?
+}
 
+// MARK: - View controller life cycle
+extension ViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    // The user may change his notification preferences while the app is not running, so it is
-    // important to always fetch the latest version of the user's settings
-    let settings = UIApplication.sharedApplication().currentUserNotificationSettings()
-
-    allowedTypes?.text = ""
-
-    if let types = settings?.types {
-      if types.contains(.Alert) {
-        allowedTypes?.text?.appendContentsOf("alert,")
-      }
-
-      if types.contains(.Badge) {
-        allowedTypes?.text?.appendContentsOf(" badge,")
-      }
-
-      if types.contains(.Sound) {
-        allowedTypes?.text?.appendContentsOf(" sound")
-      }
-
-      else if types.contains(.None) {
-        allowedTypes?.text = "none"
-        localNotificationsAllowed = false
-      }
+    // The settings may not be defined at the point. For example, it's the first time the user has
+    // launched the app.
+    if let settings = UIApplication.sharedApplication().currentUserNotificationSettings() {
+      updateNotificationPrivilegesLabel(notificationSettings: settings)
     }
+  }
+
+  override func viewDidAppear(animated: Bool) {
+    super.viewDidAppear(animated)
+
+    NSNotificationCenter.defaultCenter().addObserver(
+      self,
+      selector: "notificationSettingsRegistered:",
+      name:"notificationSettingsRegistered",
+      object: nil
+    )
+
+    NSNotificationCenter.defaultCenter().addObserver(
+      self,
+      selector: "applicationDidReceiveLocalNotification:",
+      name:"applicationDidReceiveLocalNotification",
+      object: nil
+    )
+
+  }
+
+  override func viewWillDisappear(animated: Bool) {
+    NSNotificationCenter.defaultCenter().removeObserver(self)
   }
 }
 
+// MARK: - Observers
+extension ViewController {
+  func notificationSettingsRegistered(note: NSNotification) {
+    if let settings = note.object as? UIUserNotificationSettings {
+      updateNotificationPrivilegesLabel(notificationSettings: settings)
+    }
+  }
+
+  func applicationDidReceiveLocalNotification(note: NSNotification) {
+    guard let notification = note.object as? UILocalNotification else {
+      return
+    }
+
+    let controller = UIAlertController(title: notification.alertTitle,
+      message: notification.alertBody,
+      preferredStyle: .Alert)
+    let action = UIAlertAction(title: notification.alertAction, style: .Cancel, handler: nil)
+    controller.addAction(action)
+
+    presentViewController(controller, animated: true, completion: nil)
+  }
+}
+
+// MARK: - Actions
 extension ViewController {
   @IBAction func postNotificationNowAction(_: UIButton) {
     // Before building the notification, make sure you have the rights to show local notifications.
@@ -65,7 +96,24 @@ extension ViewController {
     aNotification.fireDate = NSDate().dateByAddingTimeInterval(5.0)
     UIApplication.sharedApplication().scheduleLocalNotification(aNotification)
   }
+}
 
+// MARK: -  Private helpers
+extension ViewController {
+  private func updateNotificationPrivilegesLabel(notificationSettings settings: UIUserNotificationSettings) {
+    allowedTypes?.text = ""
+
+    // It took me an hour to come up with this.
+    if settings.types == .None {
+      allowedTypes?.text = "none"
+      localNotificationsAllowed = false
+    }
+
+    else {
+      allowedTypes?.text?.appendContentsOf("alert, badge, sound")
+      localNotificationsAllowed = true
+    }
+  }
   private func notification() -> UILocalNotification {
     let notification = UILocalNotification()
     notification.applicationIconBadgeNumber = ++count

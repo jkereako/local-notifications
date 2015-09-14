@@ -26,8 +26,13 @@ extension AppDelegate: UIApplicationDelegate {
   // Whether the user allows or denies notifications, this method will be invoked. See
   // `ViewController.viewDidLoad()` for an example of how to inspect the values of
   // `notificationSettings`
-  func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
-    // code
+  func application(application: UIApplication,
+    didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
+
+      NSNotificationCenter.defaultCenter().postNotificationName(
+        "notificationSettingsRegistered",
+        object: notificationSettings
+      )
   }
 
   // This method is invoked when the app receives a notification. In this app, it's only function is
@@ -35,6 +40,12 @@ extension AppDelegate: UIApplicationDelegate {
   func application(application: UIApplication, didReceiveLocalNotification
     notification: UILocalNotification) {
 
-      print("\n\n  Notification received\n  \(notification)\n\n")
+      // Broadcast the notification only if the application is active.
+      if application.applicationState == UIApplicationState.Active {
+        NSNotificationCenter.defaultCenter().postNotificationName(
+          "applicationDidReceiveLocalNotification",
+          object: notification
+        )
+      }
   }
 }
