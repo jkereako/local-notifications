@@ -41,11 +41,11 @@ extension AppDelegate: UIApplicationDelegate {
     notification: UILocalNotification) {
 
       // Broadcast the notification only if the application is active.
-      if application.applicationState == UIApplicationState.Active {
-        NSNotificationCenter.defaultCenter().postNotificationName(
-          "applicationDidReceiveLocalNotification",
-          object: notification
-        )
-      }
+      guard application.applicationState == UIApplicationState.Active else { return }
+
+      NSNotificationCenter.defaultCenter().postNotificationName(
+        "applicationDidReceiveLocalNotification",
+        object: notification
+      )
   }
 }

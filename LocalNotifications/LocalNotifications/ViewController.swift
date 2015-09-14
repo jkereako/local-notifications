@@ -127,7 +127,7 @@ extension ViewController {
 
   private func showError() {
     let controller = UIAlertController(title: "Notifications prohibited",
-      message: "You have denied this app the privilege to annoy you with local notifications.",
+      message: "Go to Settings > LocalNotifications to change your notification preferences.",
       preferredStyle: .Alert)
     let action = UIAlertAction(title: "Okay", style: .Cancel, handler: nil)
     controller.addAction(action)
