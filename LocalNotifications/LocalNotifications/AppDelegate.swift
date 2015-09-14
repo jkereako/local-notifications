@@ -23,6 +23,13 @@ extension AppDelegate: UIApplicationDelegate {
       return true
   }
 
+  func applicationDidBecomeActive(application: UIApplication) {
+    NSNotificationCenter.defaultCenter().postNotificationName(
+      "applicationDidBecomeActive",
+      object: nil
+    )
+  }
+
   // Whether the user allows or denies notifications, this method will be invoked. See
   // `ViewController.viewDidLoad()` for an example of how to inspect the values of
   // `notificationSettings`

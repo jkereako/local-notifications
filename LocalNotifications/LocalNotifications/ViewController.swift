@@ -12,6 +12,11 @@ class ViewController: UIViewController {
   private var count = 0
   private var localNotificationsAllowed = true
   @IBOutlet weak var allowedTypes: UILabel?
+
+  deinit {
+    // Don't forget to stop observing!
+    NSNotificationCenter.defaultCenter().removeObserver(self)
+  }
 }
 
 // MARK: - View controller life cycle
@@ -29,6 +34,7 @@ extension ViewController {
   override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
 
+    // When the user first selects whether to allow notifications or not
     NSNotificationCenter.defaultCenter().addObserver(
       self,
       selector: "notificationSettingsRegistered:",
@@ -36,6 +42,7 @@ extension ViewController {
       object: nil
     )
 
+    // When the application receives a local notification
     NSNotificationCenter.defaultCenter().addObserver(
       self,
       selector: "applicationDidReceiveLocalNotification:",
@@ -43,15 +50,20 @@ extension ViewController {
       object: nil
     )
 
-  }
+    // When the application is in the foreground
+    NSNotificationCenter.defaultCenter().addObserver(
+      self,
+      selector: "applicationDidBecomeActive:",
+      name:"applicationDidBecomeActive",
+      object: nil
+    )
 
-  override func viewWillDisappear(animated: Bool) {
-    NSNotificationCenter.defaultCenter().removeObserver(self)
   }
 }
 
 // MARK: - Observers
 extension ViewController {
+  // Respond to the user's notification settings. This will only happen 1 time.
   func notificationSettingsRegistered(note: NSNotification) {
     if let settings = note.object as? UIUserNotificationSettings {
       updateNotificationPrivilegesLabel(notificationSettings: settings)
@@ -71,6 +83,18 @@ extension ViewController {
 
     presentViewController(controller, animated: true, completion: nil)
   }
+
+  //   We have to check the user's notification settings each time this app becomes active. The
+  // possible scenario is when the user 1) sends this app into the background, 2) opens the Settings
+  // app, 3) changes his notification settings for this app, and 4) re-opens this app.
+  //   We can't rely on the delegate methods `viewDidLoad()` and `viewDidAppear()` to be invoked
+  // each time the app is visible because although the app is in the background, it is still 
+  // executing. Hence, we must respond to `applicationDidBecomeActive`.
+  func applicationDidBecomeActive(note: NSNotification) {
+    if let settings = UIApplication.sharedApplication().currentUserNotificationSettings() {
+      updateNotificationPrivilegesLabel(notificationSettings: settings)
+    }
+  }
 }
 
 // MARK: - Actions
@@ -82,6 +106,7 @@ extension ViewController {
       return
     }
 
+    // Post the local notification right away
     UIApplication.sharedApplication().presentLocalNotificationNow(notification())
   }
 
@@ -92,7 +117,8 @@ extension ViewController {
     }
 
     let aNotification = notification()
-    // 5 seconds from now
+    // Post the local notification 5 seconds from now. The point of this is 1) to prove that the
+    // scheduling feature works and 2) to allow you to view the notification as a banner.
     aNotification.fireDate = NSDate().dateByAddingTimeInterval(5.0)
     UIApplication.sharedApplication().scheduleLocalNotification(aNotification)
   }
@@ -103,7 +129,7 @@ extension ViewController {
   private func updateNotificationPrivilegesLabel(notificationSettings settings: UIUserNotificationSettings) {
     allowedTypes?.text = ""
 
-    // It took me an hour to come up with this.
+    // The best way to inspect `notificationSettings.types` is to use the Boolean expression below.
     if settings.types == .None {
       allowedTypes?.text = "none"
       localNotificationsAllowed = false
@@ -114,6 +140,8 @@ extension ViewController {
       localNotificationsAllowed = true
     }
   }
+
+  // Generate a local notification
   private func notification() -> UILocalNotification {
     let notification = UILocalNotification()
     notification.applicationIconBadgeNumber = ++count
